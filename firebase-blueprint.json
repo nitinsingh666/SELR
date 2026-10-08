@@ -1,0 +1,167 @@
+{
+  "entities": {
+    "EmergencyContact": {
+      "title": "EmergencyContact",
+      "description": "Emergency contact registered for student emergency notifications and rescue dispatch.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the contact record."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID or user identifier of the student."
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the contact person."
+        },
+        "relation": {
+          "type": "string",
+          "description": "Relationship with the student (e.g. Father, Mother, Guardian, Warden)."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Mobile phone number for SMS and phone dispatch."
+        },
+        "email": {
+          "type": "string",
+          "description": "Optional email address of the emergency contact."
+        },
+        "isPrimary": {
+          "type": "boolean",
+          "description": "Whether this contact is marked as the primary first-responder."
+        },
+        "priority": {
+          "type": "integer",
+          "description": "Order of escalation priority (1 = highest)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the contact was added."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the contact was last modified."
+        }
+      },
+      "required": [
+        "userId",
+        "name",
+        "relation",
+        "phone"
+      ]
+    },
+    "SosAlertHistory": {
+      "title": "SosAlertHistory",
+      "description": "Historical incident record of an SOS emergency alert or safe check-in event.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique incident ID for the alert event."
+        },
+        "userId": {
+          "type": "string",
+          "description": "User ID of the student who triggered the alert."
+        },
+        "studentName": {
+          "type": "string",
+          "description": "Full name of the student in need of assistance."
+        },
+        "studentRollNo": {
+          "type": "string",
+          "description": "Roll number or institutional identifier."
+        },
+        "studentClass": {
+          "type": "string",
+          "description": "Class or department of the student."
+        },
+        "bloodGroup": {
+          "type": "string",
+          "description": "Student blood group for medical dispatch."
+        },
+        "triggerType": {
+          "type": "string",
+          "enum": [
+            "SOS_CRITICAL",
+            "MEDICAL",
+            "NEED_HELP",
+            "GEOFENCE_BREACH",
+            "HIGH_RISK_CHECKIN"
+          ],
+          "description": "Nature and severity level of the alert."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "RESOLVED",
+            "CANCELLED"
+          ],
+          "description": "Current lifecycle status of the incident."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "GPS latitude coordinates of the incident."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "GPS longitude coordinates of the incident."
+        },
+        "address": {
+          "type": "string",
+          "description": "Geocoded address or physical landmark description."
+        },
+        "googleMapsUrl": {
+          "type": "string",
+          "description": "Direct Google Maps navigation URL."
+        },
+        "triggeredAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when SOS was triggered."
+        },
+        "resolvedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the alert was resolved or cancelled."
+        },
+        "resolutionNotes": {
+          "type": "string",
+          "description": "Debrief or resolution notes provided upon cancellation or rescue."
+        },
+        "contactsNotifiedCount": {
+          "type": "integer",
+          "description": "Total number of registered emergency contacts notified."
+        }
+      },
+      "required": [
+        "userId",
+        "studentName",
+        "triggerType",
+        "status",
+        "latitude",
+        "longitude",
+        "triggeredAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/emergency_contacts/{contactId}": {
+      "schema": "EmergencyContact",
+      "description": "User-owned list of emergency contacts notified during critical events."
+    },
+    "/users/{userId}/sos_history/{alertId}": {
+      "schema": "SosAlertHistory",
+      "description": "Per-user historical log of triggered SOS alerts and status resolutions."
+    },
+    "/sos_alerts/{alertId}": {
+      "schema": "SosAlertHistory",
+      "description": "Central emergency dispatch stream accessed by campus security, faculty, and admins."
+    }
+  }
+}

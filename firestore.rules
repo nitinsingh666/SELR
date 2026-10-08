@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidEmergencyContact(data) {
+      return data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 100
+        && data.relation is string && data.relation.size() > 0 && data.relation.size() <= 50
+        && data.phone is string && data.phone.size() >= 7 && data.phone.size() <= 25
+        && (!('email' in data) || (data.email is string && data.email.size() <= 120))
+        && (!('isPrimary' in data) || data.isPrimary is bool)
+        && (!('priority' in data) || data.priority is int);
+    }
+
+    function isValidSosAlert(data) {
+      return data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128
+        && data.studentName is string && data.studentName.size() > 0 && data.studentName.size() <= 100
+        && data.triggerType is string && data.triggerType in ['SOS_CRITICAL', 'MEDICAL', 'NEED_HELP', 'GEOFENCE_BREACH', 'HIGH_RISK_CHECKIN']
+        && data.status is string && data.status in ['ACTIVE', 'RESOLVED', 'CANCELLED']
+        && data.latitude is number && data.latitude >= -90.0 && data.latitude <= 90.0
+        && data.longitude is number && data.longitude >= -180.0 && data.longitude <= 180.0
+        && (!('address' in data) || (data.address is string && data.address.size() <= 300))
+        && (!('googleMapsUrl' in data) || (data.googleMapsUrl is string && data.googleMapsUrl.size() <= 200))
+        && (!('resolutionNotes' in data) || (data.resolutionNotes is string && data.resolutionNotes.size() <= 500))
+        && (!('contactsNotifiedCount' in data) || data.contactsNotifiedCount is int);
+    }
+
+    // User-owned emergency contacts
+    match /users/{userId}/emergency_contacts/{contactId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && request.resource.data.userId == userId
+        && isValidEmergencyContact(request.resource.data);
+      allow update: if isOwner(userId)
+        && request.resource.data.userId == userId
+        && isValidEmergencyContact(request.resource.data);
+      allow delete: if isOwner(userId);
+    }
+
+    // User-owned SOS history
+    match /users/{userId}/sos_history/{alertId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && request.resource.data.userId == userId
+        && isValidSosAlert(request.resource.data);
+      allow update: if isOwner(userId)
+        && request.resource.data.userId == userId
+        && isValidSosAlert(request.resource.data);
+      allow delete: if isOwner(userId);
+    }
+
+    // Central emergency alerts feed (for dispatchers, campus security, teachers)
+    match /sos_alerts/{alertId} {
+      // Anyone signed in can view active alerts for community safety / response
+      allow read: if isSignedIn();
+      // Student can create their own alert
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && isValidSosAlert(request.resource.data);
+      // Student who owns the alert or authorized responder can update status
+      allow update: if isSignedIn()
+        && (resource.data.userId == request.auth.uid || request.resource.data.userId == resource.data.userId)
+        && isValidSosAlert(request.resource.data);
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}

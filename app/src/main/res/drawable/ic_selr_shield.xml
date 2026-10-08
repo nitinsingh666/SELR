@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+
+    <!-- Olive Green Camo Shield Base -->
+    <path
+        android:fillColor="#4B5320"
+        android:pathData="M 18,12 L 78,12 L 82,54 C 82,76 48,90 48,90 C 48,90 14,76 14,54 Z" />
+
+    <!-- Camouflage Pattern Patches -->
+    <path
+        android:fillColor="#383F15"
+        android:pathData="M 28,20 Q 42,18 36,34 Q 22,36 28,20 Z" />
+    <path
+        android:fillColor="#5D672A"
+        android:pathData="M 56,22 Q 74,30 68,46 Q 52,38 56,22 Z" />
+    <path
+        android:fillColor="#313710"
+        android:pathData="M 32,54 Q 48,64 48,78 Q 28,70 32,54 Z" />
+
+    <!-- Distressed Army Red Outer Border -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#C1272D"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 18,12 L 78,12 L 82,54 C 82,76 48,90 48,90 C 48,90 14,76 14,54 Z" />
+
+    <!-- Inner Red Shield Accent -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#8E1C22"
+        android:strokeWidth="1.5"
+        android:pathData="M 23,17 L 73,17 L 76,52 C 76,71 48,84 48,84 C 48,84 20,71 20,52 Z" />
+
+    <!-- Top Red Stencil Banner Bar for SELR -->
+    <path
+        android:fillColor="#151924"
+        android:pathData="M 24,15 L 72,15 L 70,26 L 26,26 Z" />
+    <path
+        android:fillColor="#C1272D"
+        android:pathData="M 26,16 L 70,16 L 68,25 L 28,25 Z" />
+
+    <!-- Golden Halo / Aura behind Student -->
+    <path
+        android:fillColor="#50E0A838"
+        android:pathData="M 48,46 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0" />
+
+    <!-- BOY'S HEAD / FACE -->
+    <path
+        android:fillColor="#FFD1A4"
+        android:pathData="M 48,34 m -7,0 a 7,7 0 1,0 14,0 a 7,7 0 1,0 -14,0" />
+
+    <!-- BOY'S HAIR -->
+    <path
+        android:fillColor="#261D19"
+        android:pathData="M 41,33 C 41,28 55,28 55,33 C 53,30 49,29 44,30 Z" />
+
+    <!-- BOY'S CADET TORSO & SHOULDERS -->
+    <path
+        android:fillColor="#1B2335"
+        android:pathData="M 44,40 L 32,50 L 34,58 L 62,58 L 64,50 L 52,40 Z" />
+
+    <!-- Tie Accent -->
+    <path
+        android:fillColor="#C1272D"
+        android:pathData="M 46.5,41.5 L 49.5,41.5 L 48,46.5 Z" />
+
+    <!-- BOY'S HANDS HOLDING BOOK -->
+    <path
+        android:fillColor="#FFD1A4"
+        android:pathData="M 34,54 m -3,0 a 3,3 0 1,0 6,0 a 3,3 0 1,0 -6,0" />
+    <path
+        android:fillColor="#FFD1A4"
+        android:pathData="M 62,54 m -3,0 a 3,3 0 1,0 6,0 a 3,3 0 1,0 -6,0" />
+
+    <!-- OPEN STUDY BOOK IN HANDS -->
+    <path
+        android:fillColor="#8E1C22"
+        android:pathData="M 32,51 L 48,53.5 L 64,51 L 64,64 L 48,66.5 L 32,64 Z" />
+    <path
+        android:fillColor="#FFFDE7"
+        android:pathData="M 33,50.5 L 47.5,53 L 47.5,64.5 L 33,62 Z" />
+    <path
+        android:fillColor="#FFFDE7"
+        android:pathData="M 48.5,53 L 63,50.5 L 63,62 L 48.5,64.5 Z" />
+    <path
+        android:strokeColor="#C1272D"
+        android:strokeWidth="1.5"
+        android:pathData="M 48,53 L 48,65.5" />
+
+    <!-- Book text lines -->
+    <path
+        android:strokeColor="#4A5568"
+        android:strokeWidth="1"
+        android:pathData="M 36,54 L 45,55.5 M 36,57.5 L 45,59 M 36,61 L 45,62.5" />
+    <path
+        android:strokeColor="#4A5568"
+        android:strokeWidth="1"
+        android:pathData="M 51,55.5 L 60,54 M 51,59 L 60,57.5 M 51,62.5 L 60,61" />
+
+    <!-- Laurel Wreath -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2F3612"
+        android:strokeWidth="2.5"
+        android:pathData="M 30,68 C 36,78 42,80 48,80 C 54,80 60,78 66,68" />
+
+    <!-- Bottom Red Ribbon Banner -->
+    <path
+        android:fillColor="#C1272D"
+        android:pathData="M 22,76 L 74,76 L 70,86 L 48,90 L 26,86 Z" />
+    <path
+        android:fillColor="#8E1C22"
+        android:pathData="M 22,76 L 16,81 L 23,83 Z M 74,76 L 80,81 L 73,83 Z" />
+
+</vector>
